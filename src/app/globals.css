@@ -1,26 +1,109 @@
 @import "tailwindcss";
 
+/*
+ * Elara Journeys design tokens.
+ * Palette sampled from the logo (public/brand/logo-full.png).
+ * shadcn/ui variable names are kept so the components in src/components/ui work unchanged.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand */
+  --elara-navy-900: #1b2e44;
+  --elara-navy-800: #18324f;
+  --elara-navy-700: #264768;
+  --elara-slate-500: #6685a1;
+  --elara-sky-300: #9ab3c9;
+  --elara-mist-100: #eaf0f6;
+  --elara-sand-50: #faf8f4;
+
+  /* shadcn tokens */
+  --radius: 0.75rem;
+  --background: var(--elara-sand-50);
+  --foreground: var(--elara-navy-900);
+  --card: #ffffff;
+  --card-foreground: var(--elara-navy-900);
+  --popover: #ffffff;
+  --popover-foreground: var(--elara-navy-900);
+  --primary: var(--elara-navy-800);
+  --primary-foreground: #ffffff;
+  --secondary: var(--elara-mist-100);
+  --secondary-foreground: var(--elara-navy-800);
+  --muted: var(--elara-mist-100);
+  --muted-foreground: #4f6378;
+  --accent: var(--elara-mist-100);
+  --accent-foreground: var(--elara-navy-800);
+  --destructive: #c2410c;
+  --destructive-foreground: #ffffff;
+  --border: #dbe3ec;
+  --input: #dbe3ec;
+  --ring: var(--elara-slate-500);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-navy-900: var(--elara-navy-900);
+  --color-navy-800: var(--elara-navy-800);
+  --color-navy-700: var(--elara-navy-700);
+  --color-slate-brand: var(--elara-slate-500);
+  --color-sky-brand: var(--elara-sky-300);
+  --color-mist: var(--elara-mist-100);
+  --color-sand: var(--elara-sand-50);
+  --color-whatsapp: #25d366;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Set by next/font in src/app/[lang]/layout.tsx */
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+
+  /* Used by src/components/ui/accordion.tsx */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3 { font-family: var(--font-serif), Georgia, serif; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
