@@ -93,6 +93,21 @@ export function useHydrated(): boolean {
   return useSyncExternalStore(noopSubscribe, () => true, () => false);
 }
 
+let nowCache = 0;
+function subscribeNow(cb: () => void) {
+  nowCache = Date.now();
+  const id = setInterval(() => {
+    nowCache = Date.now();
+    cb();
+  }, 30_000);
+  return () => clearInterval(id);
+}
+
+/** Current time in ms, refreshed every 30 s on the client; 0 during prerender. */
+export function useNow(): number {
+  return useSyncExternalStore(subscribeNow, () => nowCache || (nowCache = Date.now()), () => 0);
+}
+
 export function todayISO(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

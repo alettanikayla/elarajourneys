@@ -210,6 +210,7 @@ const en = {
     normal: "Normal price",
     coverage: "Available in Bali, Labuan Bajo, Flores, Bromo–Ijen and Yogyakarta.",
     cta: "Add it when you book",
+    bestValue: "Best value",
   },
   myTrip: {
     title: "My Trip",

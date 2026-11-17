@@ -212,6 +212,7 @@ const id = {
     normal: "Harga normal",
     coverage: "Tersedia di Bali, Labuan Bajo, Flores, Bromo–Ijen, dan Yogyakarta.",
     cta: "Tambahkan saat memesan",
+    bestValue: "Paling hemat",
   },
   myTrip: {
     title: "Trip Saya",
