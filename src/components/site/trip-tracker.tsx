@@ -10,8 +10,8 @@ import { kindIcons } from "@/components/site/itinerary-timeline";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { Locale } from "@/i18n/config";
 import { DEMO_TRIP, demoStore, useHydrated, useNow, type DemoBooking } from "@/lib/demo-store";
-import { addDaysISO, formatDate, formatIDR, tzAbbr, type TripTimezone } from "@/lib/format";
-import { buildEvents, buildIcs, googleCalendarDayLink, todayInTz, type TripDayInput, type TripEvent } from "@/lib/trip-schedule";
+import { formatDate, formatIDR, tzAbbr, type TripTimezone } from "@/lib/format";
+import { buildEvents, buildIcs, googleCalendarDayLink, presentationStartDate, type TripDayInput, type TripEvent } from "@/lib/trip-schedule";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/lib/whatsapp";
 
@@ -148,7 +148,7 @@ function TripView({ booking, trip, lang, dict, onClose, onPaid }: { booking: Dem
   const tz = trip.tz;
 
   // In presentation mode the trip "started yesterday" so Done / Now / Next states are visible.
-  const startDate = simulate || !booking.date ? addDaysISO(todayInTz(now, tz), -1) : booking.date;
+  const startDate = simulate || !booking.date ? presentationStartDate(trip.days, now, tz) : booking.date;
   const photoDays = booking.addons.reduce((n, a) => n + a.days, 0);
   const photoLabel = lang === "id" ? "Fotografer Elara bergabung" : "Elara photographer joins you";
   const events = useMemo(() => buildEvents(trip.days, startDate, tz, photoDays, photoLabel), [trip, startDate, tz, photoDays, photoLabel]);

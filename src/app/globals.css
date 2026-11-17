@@ -100,7 +100,8 @@
     font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 { font-family: var(--font-serif), Georgia, serif; }
+  h1, h2, h3 { font-family: var(--font-serif), Georgia, serif; font-variant-numeric: lining-nums; }
+  .font-serif { font-variant-numeric: lining-nums; }
 }
 
 @media (prefers-reduced-motion: reduce) {

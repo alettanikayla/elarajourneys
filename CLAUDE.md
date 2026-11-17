@@ -421,17 +421,23 @@ Local Postgres quick start: `docker run -d --name elara-pg -e POSTGRES_PASSWORD=
 
 ## 15. Build order (tick as you go)
 
+> **DEMO MODE (decided by the owner on 2026-11-17):** this site is a **school assignment for a presentation**.
+> Booking, payment, trip tracker, custom requests and the admin panel only need to *look* finished.
+> They run client-side with mock data and `localStorage` (`src/lib/demo-store.ts`, `src/components/admin/mock-data.ts`).
+> No PostgreSQL, Midtrans, Resend or cron. Admin demo password: `elara2026`. Demo trip: `ELR-BAL4K7` / `demo@elarajourneys.com`.
+> Push every change to GitHub (Vercel auto-deploys from `main`).
+
 - [x] M0 Scaffold, brand tokens, optimized assets, favicons, owner components copied, brand icons
-- [ ] M1 i18n skeleton: `proxy.ts`, `app/[lang]/layout.tsx` (fonts, metadata), dictionaries, header, footer (refactored), **WhatsApp FAB (F1)**; delete the scaffold `src/app/layout.tsx` + `page.tsx`
-- [ ] M2 Content layer: types + 5 packages + destinations + add-ons + FAQs (EN/ID)
-- [ ] M3 Home page, packages listing with filters, destination pages
-- [ ] M4 Package detail with timed itinerary timeline, included/excluded, hotels/transport (F2, F4)
-- [ ] M5 DB schema + migrations + seed; departures seat availability
-- [ ] M6 Booking flow + Midtrans Snap + webhook + manual-transfer fallback + confirmation email (F2)
-- [ ] M7 Custom trip form + WhatsApp handoff (F3); photography page + add-ons (F6)
-- [ ] M8 My Trip tracker + ICS alarms + email reminder cron + browser notifications (F5)
-- [ ] M9 Admin panel (bookings, payments, itinerary editor, requests → convert)
-- [ ] M10 Legal pages (drafts), SEO (sitemap, robots, JSON-LD, OG), 404, error states
+- [x] M1 i18n skeleton: `proxy.ts`, `app/[lang]/layout.tsx` (fonts, metadata), dictionaries, header, footer (refactored), **WhatsApp FAB (F1)**; delete the scaffold `src/app/layout.tsx` + `page.tsx`
+- [x] M2 Content layer: types + 5 packages + destinations + add-ons + FAQs (EN/ID)
+- [x] M3 Home page, packages listing with filters, destination pages
+- [x] M4 Package detail with timed itinerary timeline, included/excluded, hotels/transport (F2, F4)
+- [ ] M5 DB schema + migrations + seed; departures seat availability *(skipped: demo mode)*
+- [x] M6 Booking flow + payment *(demo: client-side quote, fake VA/QRIS/e-wallet payment)*
+- [x] M7 Custom trip form + WhatsApp handoff (F3); photography page + add-ons (F6)
+- [x] M8 My Trip tracker + ICS alarms + browser notifications (F5) *(email cron skipped; "presentation mode" simulates a live trip)*
+- [x] M9 Admin panel (bookings, payments, itinerary editor, requests → convert) *(demo data)*
+- [x] M10 Legal pages (drafts), SEO (sitemap, robots, JSON-LD, OG), 404, error states
 - [ ] M11 QA: `npm run build` clean, Lighthouse mobile ≥ 90, test both languages, test booking end-to-end in sandbox, keyboard & screen-reader pass
 
 ## 16. Working rules for Claude

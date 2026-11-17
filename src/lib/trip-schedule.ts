@@ -28,7 +28,9 @@ export function buildEvents(days: TripDayInput[], startDate: string, tz: TripTim
   for (const day of days) {
     const date = addDaysISO(startDate, day.day - 1);
     const items = [...day.items];
-    if (day.day <= photoDays) items.push({ time: "08:00", title: photoLabel, kind: "photo" });
+    // Photographer joins from day 2 (day 1 is usually arrival), at that day's first activity.
+    const firstActivity = day.items.find((i) => i.kind === "activity");
+    if (day.day >= 2 && day.day < 2 + photoDays && firstActivity) items.push({ time: firstActivity.time, title: photoLabel, kind: "photo" });
     items.sort((a, b) => a.time.localeCompare(b.time));
     items.forEach((it, i) => {
       const start = toEpoch(date, it.time, tz);
@@ -38,6 +40,28 @@ export function buildEvents(days: TripDayInput[], startDate: string, tz: TripTim
     });
   }
   return events;
+}
+
+/**
+ * Presentation mode: picks a start date so that "today" is the trip day whose schedule best matches the
+ * current clock time, so the tracker always shows an item that is happening now or coming up soon.
+ */
+export function presentationStartDate(days: TripDayInput[], now: number, tz: TripTimezone): string {
+  const today = todayInTz(now, tz);
+  const [hh, mm] = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(now)).split(":").map(Number);
+  const nowMin = hh * 60 + mm;
+  const toMin = (t: string) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5));
+  let best = { day: Math.min(2, days.length), score: Infinity };
+  for (const d of days) {
+    for (const it of d.items) {
+      const start = toMin(it.time);
+      const end = it.endTime ? toMin(it.endTime) : start + 60;
+      // Running now scores best; otherwise prefer the soonest upcoming item today.
+      const score = start <= nowMin && nowMin < end ? -1 : start > nowMin ? start - nowMin : Infinity;
+      if (score < best.score) best = { day: d.day, score };
+    }
+  }
+  return addDaysISO(today, -(best.day - 1));
 }
 
 export function todayInTz(now: number, tz: TripTimezone): string {

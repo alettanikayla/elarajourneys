@@ -1,40 +1,32 @@
-# Elara Journeys — Website
+# Elara Journeys — Website (demo tugas sekolah)
 
-Website travel Elara Journeys (Next.js 16 + Tailwind v4 + shadcn/ui + PostgreSQL). Bahasa Inggris (default) + Bahasa Indonesia.
+Website travel Elara Journeys (Next.js 16 + Tailwind v4 + shadcn/ui). Bahasa Inggris (default) + Bahasa Indonesia.
+Semua spesifikasi ada di [`CLAUDE.md`](./CLAUDE.md).
 
-**Semua spesifikasi, keputusan teknis, daftar aset, dan urutan pengerjaan ada di [`CLAUDE.md`](./CLAUDE.md).**
+> **Mode demo:** booking, pembayaran, Trip Saya, dan admin hanya simulasi (data tersimpan di browser). Tidak ada uang atau pemesanan sungguhan.
 
-## Isi folder
+## Yang bisa dicoba saat presentasi
 
-| Folder / file | Isi |
+| Halaman | Apa yang ditunjukkan |
 |---|---|
-| `CLAUDE.md` | Panduan lengkap untuk Claude Code (fitur, struktur, database, urutan kerja) |
-| `public/images/` | 14 foto destinasi, sudah dikonversi ke WebP (siap pakai di website) |
-| `public/brand/` | Logo lengkap & logo "E" (latar transparan) |
-| `src/app/icon.png`, `apple-icon.png` | Favicon dari logo |
-| `src/components/ui/` | Komponen Anda: button, accordion, faqs-02, footer-column |
-| `src/components/icons/brand.tsx` | Ikon WhatsApp, Instagram, TikTok, Facebook, YouTube |
-| `src/lib/utils.ts` | Fungsi `cn()` dari komponen Anda |
-| `src/app/globals.css` | Warna brand (diambil dari logo) + token shadcn |
-| `assets/original-photos/` | Foto asli (cadangan, tidak dipakai langsung) |
-| `assets/brand-source/` | Logo asli |
-| `docs/` | Business Model Canvas, PDF blueprint, contoh demo FAQ |
-| `.env.example` | Daftar variabel lingkungan (WhatsApp, database, Midtrans, email) |
+| `/` | Beranda, pencarian cepat, destinasi, "semua sudah diurus", tombol WhatsApp melayang |
+| `/en/packages` | Daftar paket + filter (destinasi, bulan, durasi, jenis trip, harga) |
+| `/id/packages/bromo-ijen-3d2n` | Detail paket + itinerary per jam (WIB/WITA) |
+| `…/book` | Form booking: open/private trip, peserta, add-on fotografer, DP 30% |
+| `/en/booking` | Konfirmasi + pembayaran demo (VA / QRIS / e-wallet) |
+| `/en/my-trip` | Trip tracker. Klik **Try the demo trip** (`ELR-BAL4K7` / `demo@elarajourneys.com`) |
+| `/en/custom-trip` | Form custom trip + lanjut ke WhatsApp |
+| `/admin` | Panel admin. Password demo: **`elara2026`** |
 
-## Mulai di VS Code
+## Jalankan di komputer
 
 ```bash
 npm install
-cp .env.example .env.local   # isi nomor WhatsApp, dll.
-npm run dev                  # buka http://localhost:3000
+npm run dev          # buka http://localhost:3000
 ```
 
-Lalu buka Claude Code di folder ini dan ketik misalnya:
-> Baca CLAUDE.md, lalu kerjakan milestone M1.
+## Website live (Vercel)
 
-## Push ke GitHub
-
-```bash
-git remote -v                      # sudah diarahkan ke github.com/alettanikayla/elarajourneys
-git push -u origin main
-```
+1. Buka https://vercel.com → **Sign up with GitHub**.
+2. **Add New → Project** → pilih repo `alettanikayla/elarajourneys` → **Deploy** (tidak perlu mengubah pengaturan).
+3. Setelah itu setiap `git push` ke `main` otomatis meng-update website live.

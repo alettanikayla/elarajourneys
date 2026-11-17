@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -51,11 +51,7 @@ export function BookingForm({ pkg, lang, addons, dict }: Props) {
   const minPrivate = today ? addDaysISO(today, 7) : "";
   const selectedAddons = Object.entries(addonDays).filter(([, d]) => d > 0).map(([id, days]) => ({ id, days }));
 
-  const q = useMemo(
-    () => quote(pkg, { tripType, date, adults, children, infants, addons: selectedAddons }, today || "1970-01-01"),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pkg, tripType, date, adults, children, infants, JSON.stringify(selectedAddons), today],
-  );
+  const q = quote(pkg, { tripType, date, adults, children, infants, addons: selectedAddons }, today || "1970-01-01");
 
   const errors = {
     date: !date || (tripType === "private" && date < minPrivate),
