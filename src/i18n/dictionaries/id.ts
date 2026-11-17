@@ -88,6 +88,7 @@ const id = {
     filters: { destination: "Destinasi", duration: "Durasi", tripType: "Jenis trip", maxPrice: "Harga maks.", all: "Semua", short: "≤ 3 hari", long: "4+ hari", reset: "Reset filter" },
     noResults: "Tidak ada trip yang cocok dengan filter ini.",
     results: "trip",
+    result: "trip",
   },
   detail: {
     highlights: "Highlight",

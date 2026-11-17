@@ -61,6 +61,7 @@ export default async function PackagesPage({ params }: PageProps<"/[lang]/packag
               ...dict.packages.filters,
               noResults: dict.packages.noResults,
               results: dict.packages.results,
+              result: dict.packages.result,
               open: dict.common.openTrip,
               private: dict.common.privateTrip,
               anyMonth: dict.home.search.anyMonth,

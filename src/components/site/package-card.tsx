@@ -28,7 +28,7 @@ export function PackageCard({ pkg, lang, dict }: { pkg: Package; lang: Locale; d
         </div>
         <h3 className="text-2xl font-semibold leading-tight text-navy-900">{t(pkg.title, lang)}</h3>
         <p className="line-clamp-2 text-sm text-muted-foreground">{t(pkg.summary, lang)}</p>
-        <div className="mt-auto flex items-end justify-between pt-2">
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-x-3 gap-y-1 pt-2">
           <div>
             <p className="text-xs text-muted-foreground">{dict.common.from}</p>
             <p className="text-lg font-semibold text-navy-800">

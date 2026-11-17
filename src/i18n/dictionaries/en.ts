@@ -86,6 +86,7 @@ const en = {
     filters: { destination: "Destination", duration: "Duration", tripType: "Trip type", maxPrice: "Max price", all: "All", short: "≤ 3 days", long: "4+ days", reset: "Reset filters" },
     noResults: "No trips match these filters.",
     results: "trips",
+    result: "trip",
   },
   detail: {
     highlights: "Highlights",

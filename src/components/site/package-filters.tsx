@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { FancySelect } from "@/components/ui/fancy-select";
 
 export type FilterItem = { slug: string; destination: string; days: number; types: string[]; price: number; months: string[] };
 
@@ -17,6 +18,7 @@ type Labels = {
   reset: string;
   noResults: string;
   results: string;
+  result: string;
   open: string;
   private: string;
   anyMonth: string;
@@ -70,61 +72,23 @@ export function PackageFilters({
     [items, f.destination, f.duration, f.type, f.month, f.max],
   );
 
-  const selectCls = "h-11 w-full rounded-xl border border-border bg-card px-3 text-sm font-medium text-navy-900 outline-none focus:ring-2 focus:ring-ring";
+  const all = { value: "", label: labels.all };
 
   return (
     <div className="grid gap-8 lg:grid-cols-[16rem_1fr]">
-      <aside className="flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
-        <label className="flex flex-col gap-1.5 text-sm font-medium text-navy-900">
-          {labels.destination}
-          <select className={selectCls} value={f.destination} onChange={(e) => set("destination", e.target.value)}>
-            <option value="">{labels.all}</option>
-            {destinations.map((d) => (
-              <option key={d.slug} value={d.slug}>{d.name}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1.5 text-sm font-medium text-navy-900">
-          {labels.month}
-          <select className={selectCls} value={f.month} onChange={(e) => set("month", e.target.value)}>
-            <option value="">{labels.anyMonth}</option>
-            {months.map((m) => (
-              <option key={m.value} value={m.value}>{m.label}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1.5 text-sm font-medium text-navy-900">
-          {labels.duration}
-          <select className={selectCls} value={f.duration} onChange={(e) => set("duration", e.target.value)}>
-            <option value="">{labels.all}</option>
-            <option value="short">{labels.short}</option>
-            <option value="long">{labels.long}</option>
-          </select>
-        </label>
-        <label className="flex flex-col gap-1.5 text-sm font-medium text-navy-900">
-          {labels.tripType}
-          <select className={selectCls} value={f.type} onChange={(e) => set("type", e.target.value)}>
-            <option value="">{labels.all}</option>
-            <option value="open">{labels.open}</option>
-            <option value="private">{labels.private}</option>
-          </select>
-        </label>
-        <label className="flex flex-col gap-1.5 text-sm font-medium text-navy-900">
-          {labels.maxPrice}
-          <select className={selectCls} value={f.max} onChange={(e) => set("max", e.target.value)}>
-            <option value="">{labels.all}</option>
-            {prices.map((p) => (
-              <option key={p.value} value={p.value}>{p.label}</option>
-            ))}
-          </select>
-        </label>
+      <aside className="z-20 flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
+        <FancySelect label={labels.destination} value={f.destination} onChange={(v) => set("destination", v)} options={[all, ...destinations.map((d) => ({ value: d.slug, label: d.name }))]} />
+        <FancySelect label={labels.month} value={f.month} onChange={(v) => set("month", v)} options={[{ value: "", label: labels.anyMonth }, ...months]} />
+        <FancySelect label={labels.duration} value={f.duration} onChange={(v) => set("duration", v)} options={[all, { value: "short", label: labels.short }, { value: "long", label: labels.long }]} />
+        <FancySelect label={labels.tripType} value={f.type} onChange={(v) => set("type", v)} options={[all, { value: "open", label: labels.open }, { value: "private", label: labels.private }]} />
+        <FancySelect label={labels.maxPrice} value={f.max} onChange={(v) => set("max", v)} options={[all, ...prices]} />
         <Button variant="ghost" className="justify-start px-0 text-slate-brand" onClick={() => router.replace(pathname, { scroll: false })}>
           {labels.reset}
         </Button>
       </aside>
       <div>
         <p className="mb-4 text-sm text-muted-foreground">
-          {visible.length} {labels.results}
+          {visible.length} {visible.length === 1 ? labels.result : labels.results}
         </p>
         {visible.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">{labels.noResults}</p>

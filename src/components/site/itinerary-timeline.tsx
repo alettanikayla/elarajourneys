@@ -41,10 +41,9 @@ export function ItineraryTimeline({ days, tz, labels }: { days: TimelineDay[]; t
           <AccordionItem key={d.day} value={`day-${d.day}`} className="last:border-b-0">
             <AccordionTrigger className="gap-4 text-left hover:no-underline">
               <span className="flex items-center gap-4">
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-navy-800 text-center text-[10px] font-semibold uppercase leading-tight text-white">
-                  {labels.day}
-                  <br />
-                  <span className="text-base">{d.day}</span>
+                <span className="flex size-12 shrink-0 flex-col items-center justify-center rounded-full bg-navy-800 font-sans text-white shadow-md shadow-navy-900/20 ring-4 ring-mist">
+                  <span className="text-[8.5px] font-semibold uppercase leading-none tracking-[0.14em] text-sky-brand">{labels.day}</span>
+                  <span className="mt-0.5 text-lg font-semibold leading-none tabular-nums">{d.day}</span>
                 </span>
                 <span className="font-serif text-xl font-semibold text-navy-900 sm:text-2xl">{d.title}</span>
               </span>

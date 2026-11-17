@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BedDouble, Camera, Car, CreditCard, Map, Route, Search, ShieldCheck, Sparkles, Ticket, UserRound, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FancySelect } from "@/components/ui/fancy-select";
 import { FaqSection } from "@/components/site/faq-section";
 import { PackageCard } from "@/components/site/package-card";
 import { Section, SectionHeading } from "@/components/site/section";
@@ -34,7 +35,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate flex min-h-[88svh] items-end overflow-hidden bg-navy-900 text-white">
+      {/* No overflow-hidden here: the search dropdowns must be able to extend below the hero. */}
+      <section className="relative isolate z-10 flex min-h-[88svh] items-end bg-navy-900 text-white">
         <Image src="/images/padar-island.webp" alt={lang === "id" ? "Pemandangan Pulau Padar, Komodo" : "Padar Island viewpoint, Komodo"} fill priority sizes="100vw" className="-z-10 object-cover" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-900 via-navy-900/45 to-navy-900/10" />
         <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-32 sm:px-6 sm:pb-16 lg:px-8">
@@ -42,34 +44,32 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           <h1 className="max-w-4xl text-balance text-5xl font-semibold leading-[0.98] sm:text-7xl">{h.title}</h1>
           <p className="mt-6 max-w-2xl text-pretty text-lg text-white/85">{h.subtitle}</p>
 
-          <form action={`/${lang}/packages`} className="mt-10 grid gap-2 rounded-2xl bg-white p-2 text-navy-900 shadow-2xl sm:grid-cols-[1fr_1fr_1fr_auto]">
-            <label className="flex flex-col rounded-xl px-4 py-2 hover:bg-mist">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{h.search.destination}</span>
-              <select name="destination" className="bg-transparent py-1 text-sm font-medium outline-none">
-                <option value="">{h.search.anyDestination}</option>
-                {destinations.map((d) => (
-                  <option key={d.slug} value={d.slug}>{d.name}</option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col rounded-xl px-4 py-2 hover:bg-mist">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{h.search.month}</span>
-              <select name="month" className="bg-transparent py-1 text-sm font-medium outline-none">
-                <option value="">{h.search.anyMonth}</option>
-                {MONTHS.map((m) => (
-                  <option key={m} value={m}>{formatDate(`${m}-01`, lang, { day: undefined, month: "long" })}</option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col rounded-xl px-4 py-2 hover:bg-mist">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{h.search.tripType}</span>
-              <select name="type" className="bg-transparent py-1 text-sm font-medium outline-none">
-                <option value="">{h.search.anyType}</option>
-                <option value="open">{dict.common.openTrip}</option>
-                <option value="private">{dict.common.privateTrip}</option>
-              </select>
-            </label>
-            <Button type="submit" size="lg" className="h-auto rounded-xl py-4">
+          <form action={`/${lang}/packages`} className="mt-10 grid gap-1 rounded-2xl bg-white p-2 text-navy-900 shadow-2xl sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-center sm:divide-x sm:divide-border/70">
+            <FancySelect
+              variant="hero"
+              name="destination"
+              label={h.search.destination}
+              options={[{ value: "", label: h.search.anyDestination }, ...destinations.map((d) => ({ value: d.slug, label: d.name }))]}
+            />
+            <FancySelect
+              variant="hero"
+              name="month"
+              label={h.search.month}
+              className="sm:pl-1"
+              options={[{ value: "", label: h.search.anyMonth }, ...MONTHS.map((m) => ({ value: m, label: formatDate(`${m}-01`, lang, { day: undefined, month: "long" }) }))]}
+            />
+            <FancySelect
+              variant="hero"
+              name="type"
+              label={h.search.tripType}
+              className="sm:pl-1"
+              options={[
+                { value: "", label: h.search.anyType },
+                { value: "open", label: dict.common.openTrip },
+                { value: "private", label: dict.common.privateTrip },
+              ]}
+            />
+            <Button type="submit" size="lg" className="h-auto rounded-xl py-4 transition-transform active:scale-[0.98] sm:ml-1">
               <Search className="size-4" /> {h.search.submit}
             </Button>
           </form>

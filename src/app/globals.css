@@ -80,6 +80,19 @@
   /* Used by src/components/ui/accordion.tsx */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  /* Used by src/components/ui/fancy-select.tsx */
+  --animate-pop-in: pop-in 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  --animate-option-in: option-in 0.22s ease-out both;
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes option-in {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes accordion-down {
