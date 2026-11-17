@@ -8,30 +8,14 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-const faqs = [
-  {
-    q: "What's included in Pro?",
-    a: "All 135+ blocks, every category, lifetime updates and registry access from /account/registry-token.",
-  },
-  {
-    q: "Can my team share one license?",
-    a: "Pro is per-seat. Team plans include up to 10 seats with a per-user token each.",
-  },
-  {
-    q: "What stack is required?",
-    a: "Next.js (App Router) with React 19, Tailwind v4 and shadcn/ui. Older versions might work but aren't officially supported.",
-  },
-  {
-    q: "Are blocks responsive?",
-    a: "Every block reads from ~380px to full desktop. Mobile drawers and stacked layouts ship with each section.",
-  },
-  {
-    q: "Do you handle dark mode?",
-    a: "Yes — every block uses shadcn CSS variables so it adapts to either theme out of the box.",
-  },
-];
+export type Faqs02Props = {
+  title: string;
+  intro: string;
+  items: { q: string; a: string }[];
+  contact: { title: string; reply: string; cta: string; href: string; emailLabel: string; email: string };
+};
 
-export default function Faqs02() {
+export default function Faqs02({ title, intro, items, contact }: Faqs02Props) {
   return (
     <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
@@ -41,25 +25,12 @@ export default function Faqs02() {
               FAQs
             </span>
             <h2
-              className="text-balance font-semibold tracking-tight"
-              style={{
-                fontSize: "clamp(1.85rem, 4vw, 2.75rem)",
-                letterSpacing: "-0.03em",
-                lineHeight: 1.08,
-              }}
+              className="text-balance font-semibold tracking-tight text-navy-900"
+              style={{ fontSize: "clamp(2.1rem, 4vw, 3rem)", letterSpacing: "-0.01em", lineHeight: 1.05 }}
             >
-              Your questions answered
+              {title}
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Quick answers from the team. Still stuck? Write to{" "}
-              <a
-                href="#"
-                className="font-medium text-foreground underline-offset-4 hover:underline"
-              >
-                hey@blockus.dev
-              </a>{" "}
-              and a real person replies.
-            </p>
+            <p className="text-sm text-muted-foreground">{intro}</p>
 
             <div className="mt-2 flex flex-col gap-2 rounded-2xl border border-border bg-card p-4">
               <div className="flex items-center gap-3">
@@ -67,37 +38,34 @@ export default function Faqs02() {
                   <MessageCircle className="size-4" />
                 </span>
                 <div className="flex flex-col leading-tight">
-                  <p className="text-sm font-medium text-foreground">
-                    Talk to a human
-                  </p>
+                  <p className="text-sm font-medium text-foreground">{contact.title}</p>
                   <p className="text-xs text-muted-foreground">
                     <Clock className="mr-1.5 inline size-3" />
-                    Replies in &lt; 4h
+                    {contact.reply}
                   </p>
                 </div>
               </div>
-              <Button size="sm" className="mt-2 w-full rounded-full">
-                Open a ticket
-                <ArrowRight />
+              <Button asChild size="sm" className="mt-2 w-full rounded-full">
+                <a href={contact.href} target="_blank" rel="noopener noreferrer">
+                  {contact.cta}
+                  <ArrowRight />
+                </a>
               </Button>
               <p className="text-center text-[11px] text-muted-foreground">
                 <Mail className="mr-1 inline size-3" />
-                Or email{" "}
-                <a
-                  href="mailto:hey@blockus.dev"
-                  className="font-medium text-foreground underline-offset-4 hover:underline"
-                >
-                  hey@blockus.dev
+                {contact.emailLabel}{" "}
+                <a href={`mailto:${contact.email}`} className="font-medium text-foreground underline-offset-4 hover:underline">
+                  {contact.email}
                 </a>
               </p>
             </div>
           </div>
 
           <Accordion type="single" collapsible>
-            {faqs.map((f, i) => (
+            {items.map((f, i) => (
               <AccordionItem key={f.q} value={`item-${i}`}>
-                <AccordionTrigger>{f.q}</AccordionTrigger>
-                <AccordionContent>{f.a}</AccordionContent>
+                <AccordionTrigger className="text-left text-base">{f.q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
